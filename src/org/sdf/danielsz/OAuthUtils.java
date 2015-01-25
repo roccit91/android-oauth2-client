@@ -282,8 +282,8 @@ public class OAuthUtils {
 			e1.printStackTrace();
 		}
 
-		System.out.println();
-		System.out.println("********** JSON Response Received **********");
+//		System.out.println();
+//		System.out.println("********** JSON Response Received **********");
 		
 		Map<String, Object> outMap = new HashMap<String, Object>();
 		Iterator<String> keysIterator = oauthLoginResponse.keys();
@@ -298,7 +298,7 @@ public class OAuthUtils {
 					e.printStackTrace();
 				}
 				outMap.put(keyStr,value);
-		        System.out.println(String.format("  %s = %s", keyStr, value));
+//		        System.out.println(String.format("  %s = %s", keyStr, value));
 		}
 			
 		return outMap;

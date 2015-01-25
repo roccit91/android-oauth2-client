@@ -41,7 +41,7 @@ public class OAuth2Config {
 		return password;
 	}
 	public String getTokenEndPointUrl() {
-		return site + "/oauth/token";
+		return site + "/oauth2/grant";
 	}
 
 	public static class OAuth2ConfigBuilder {
