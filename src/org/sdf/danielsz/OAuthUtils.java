@@ -38,7 +38,7 @@ import android.util.Base64;
 
 public class OAuthUtils {
 
-	public static String getProtectedResource(OAuth2Client client, Token token, String path) {
+	public static Map getProtectedResource(OAuth2Client client, Token token, String path) {
 		
 		String resourceURL = client.getSite() + path;
 		HttpGet get = new HttpGet(resourceURL);
@@ -58,10 +58,10 @@ public class OAuthUtils {
 										+ code);
 					}
 
-			HttpEntity entity = response.getEntity();
-			responseString = EntityUtils.toString(entity, "UTF-8");
-			System.out.println(responseString);
-			//handleResponse(response);
+//			HttpEntity entity = response.getEntity();
+//			responseString = EntityUtils.toString(entity, "UTF-8");
+//			System.out.println(responseString);
+			return handleResponse(response);
 
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
@@ -77,7 +77,7 @@ public class OAuthUtils {
 				e.printStackTrace();
 			}	
 		}
-		return responseString;
+		return null;
 	}
 
 	public static Token getAccessToken(OAuth2Config oauthDetails) {
@@ -243,7 +243,7 @@ public class OAuthUtils {
 		return accessToken;
 	}
 	
-	public static Map handleResponse(HttpResponse response) {
+	public static Map<String, Object> handleResponse(HttpResponse response) {
 		String contentType = OAuthConstants.JSON_CONTENT;
 		if (response.getEntity().getContentType() != null) {
 			contentType = response.getEntity().getContentType().getValue();
@@ -266,7 +266,7 @@ public class OAuthUtils {
 
 	}
 
-	public static Map handleJsonResponse(HttpResponse response) {
+	public static Map<String, Object> handleJsonResponse(HttpResponse response) {
 		JSONObject oauthLoginResponse = null;
 		String contentType = response.getEntity().getContentType().getValue();
 		try {

@@ -1,6 +1,8 @@
 package org.sdf.danielsz;
 
 
+import java.util.Map;
+
 public class Token {
 
 		private final Long expiresIn;
@@ -45,7 +47,7 @@ public class Token {
 		 return (System.currentTimeMillis() >= this.getExpiresAt()) ? true : false;
 		}
 		
-		public String getResource(OAuth2Client client, Token token, String path) {
+		public Map getResource(OAuth2Client client, Token token, String path) {
 			return OAuthUtils.getProtectedResource(client, token, path);
 		}
 		
