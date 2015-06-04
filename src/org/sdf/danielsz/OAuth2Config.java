@@ -19,6 +19,7 @@ public class OAuth2Config {
 		this.scope = builder.scope;
 		this.grantType = builder.grantType;
 	}
+
 	public String getScope() {
 		return scope;
 	}

@@ -47,20 +47,17 @@ public class OAuthUtils {
 						.getAccessToken()));
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpResponse response = null;
-		String responseString = "";
 		int code = -1;
+
 		try {
 			response = httpClient.execute(get);
 			code = response.getStatusLine().getStatusCode();
 			if (code >= 400) {
 				throw new RuntimeException(
-								"Could not access protected resource. Server returned http code: "
-										+ code);
-					}
+                        "Could not access protected resource. Server returned http code: "
+                + code);
+            }
 
-//			HttpEntity entity = response.getEntity();
-//			responseString = EntityUtils.toString(entity, "UTF-8");
-//			System.out.println(responseString);
 			return handleResponse(response);
 
 		} catch (ClientProtocolException e) {
@@ -153,15 +150,22 @@ public class OAuthUtils {
 					response = client.execute(post);
 					code = response.getStatusLine().getStatusCode();
 					if (code >= 400) {
-						throw new RuntimeException(
+						OAuthException e = new OAuthException(
 								"Could not retrieve access token for user: "
-										+ oauthDetails.getUsername());
+										+ oauthDetails.getUsername()
+						);
+						e.setCode(code);
+						e.setUri(post.getURI());
+						throw e;
 					}
 				}
 
 			}
 			Map<String, Object> map = handleResponse(response);
-			accessToken = new Token(new Long((Integer) map.get(OAuthConstants.EXPIRES_IN)), (String) map.get(OAuthConstants.TOKEN_TYPE), (String) map.get(OAuthConstants.REFRESH_TOKEN), (String) map.get(OAuthConstants.ACCESS_TOKEN));
+			accessToken = new Token(new Long((Integer) map.get(OAuthConstants.EXPIRES_IN)),
+                    (String) map.get(OAuthConstants.TOKEN_TYPE),
+                    (String) map.get(OAuthConstants.REFRESH_TOKEN),
+                    (String) map.get(OAuthConstants.ACCESS_TOKEN));
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,14 +228,20 @@ public class OAuthUtils {
 					response = client.execute(post);
 					code = response.getStatusLine().getStatusCode();
 					if (code >= 400) {
-						throw new RuntimeException(
+						OAuthException e = new OAuthException(
 								"Could not retrieve access token for user: "
-										+ oauthDetails.getUsername());
+										+ oauthDetails.getUsername()
+						);
+						e.setCode(code);
+						e.setUri(post.getURI());
 					}
 				}
 
 				Map<String, Object> map = handleResponse(response);
-				accessToken = new Token(new Long((Integer) map.get(OAuthConstants.EXPIRES_IN)), (String) map.get(OAuthConstants.TOKEN_TYPE), (String) map.get(OAuthConstants.REFRESH_TOKEN), (String) map.get(OAuthConstants.ACCESS_TOKEN));
+				accessToken = new Token(new Long((Integer) map.get(OAuthConstants.EXPIRES_IN)),
+                        (String) map.get(OAuthConstants.TOKEN_TYPE),
+                        (String) map.get(OAuthConstants.REFRESH_TOKEN),
+                        (String) map.get(OAuthConstants.ACCESS_TOKEN));
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -289,7 +299,7 @@ public class OAuthUtils {
 		Iterator<String> keysIterator = oauthLoginResponse.keys();
 		while (keysIterator.hasNext()) 
 		{
-		        String keyStr = (String)keysIterator.next();
+		        String keyStr = keysIterator.next();
 		        Object value = null;
 				try {
 					value = oauthLoginResponse.get(keyStr);
@@ -306,7 +316,7 @@ public class OAuthUtils {
 
 	public static Map handleURLEncodedResponse(HttpResponse response) {
 		Map<String, Charset> map = Charset.availableCharsets();
-		Map<String, String> oauthResponse = new HashMap<String, String>();
+		Map<String, String> oauthResponse = new HashMap<>();
 		Set<Map.Entry<String, Charset>> set = map.entrySet();
 		Charset charset = null;
 		HttpEntity entity = response.getEntity();
