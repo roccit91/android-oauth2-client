@@ -77,7 +77,7 @@ public class OAuthUtils {
 		return null;
 	}
 
-	public static Token getAccessToken(OAuth2Config oauthDetails) {
+	public static Token getAccessToken(OAuth2Config oauthDetails, boolean isGoogle) {
 		HttpPost post = new HttpPost(oauthDetails.getTokenEndPointUrl());
 		String clientId = oauthDetails.getClientId();
 		String clientSecret = oauthDetails.getClientSecret();
@@ -86,10 +86,16 @@ public class OAuthUtils {
 		List<BasicNameValuePair> parametersBody = new ArrayList<BasicNameValuePair>();
 		parametersBody.add(new BasicNameValuePair(OAuthConstants.GRANT_TYPE,
 				oauthDetails.getGrantType()));
-		parametersBody.add(new BasicNameValuePair(OAuthConstants.USERNAME,
-				oauthDetails.getUsername()));
-		parametersBody.add(new BasicNameValuePair(OAuthConstants.PASSWORD,
-				oauthDetails.getPassword()));
+		if (!isGoogle) {
+			parametersBody.add(new BasicNameValuePair(OAuthConstants.USERNAME,
+					oauthDetails.getUsername()));
+			parametersBody.add(new BasicNameValuePair(OAuthConstants.PASSWORD,
+					oauthDetails.getPassword()));
+		} else {
+			System.out.println("getAccessToken isGoogle! [" + oauthDetails.getGoogleAccessToken() + "]");
+			parametersBody.add(new BasicNameValuePair(OAuthConstants.ACCESS_TOKEN,
+					oauthDetails.getGoogleAccessToken()));
+		}
 
 		if (isValid(clientId)) {
 			parametersBody.add(new BasicNameValuePair(OAuthConstants.CLIENT_ID,
@@ -175,6 +181,10 @@ public class OAuthUtils {
 		}
 
 		return accessToken;
+	}
+
+	public static Token getAccessToken(OAuth2Config oauthDetails) {
+		return getAccessToken(oauthDetails);
 	}
 
 	

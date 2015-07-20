@@ -9,6 +9,7 @@ public class OAuth2Config {
 	private final String username;
 	private final String password;
 	private final String site;
+	private final String googleAccessToken;
 	
 	private OAuth2Config(OAuth2ConfigBuilder builder) {
 		this.username = builder.username;
@@ -18,6 +19,7 @@ public class OAuth2Config {
 		this.site = builder.site;
 		this.scope = builder.scope;
 		this.grantType = builder.grantType;
+		this.googleAccessToken = builder.googleAccessToken;
 	}
 
 	public String getScope() {
@@ -45,6 +47,10 @@ public class OAuth2Config {
 		return site + "/oauth2/grant";
 	}
 
+	public String getGoogleAccessToken() {
+		return googleAccessToken;
+	}
+
 	public static class OAuth2ConfigBuilder {
 		private String scope;
 		private String grantType;
@@ -53,10 +59,18 @@ public class OAuth2Config {
 		private String username;
 		private String password;
 		private String site;
+		private String googleAccessToken;
 
 		public OAuth2ConfigBuilder(String username, String password, String clientId, String clientSecret, String site) {
 			this.username = username;
 			this.password = password;
+			this.clientId = clientId;
+			this.clientSecret = clientSecret;
+			this.site = site;
+		}
+
+		public OAuth2ConfigBuilder(String googleAccessToken, String clientId, String clientSecret, String site) {
+			this.googleAccessToken = googleAccessToken;
 			this.clientId = clientId;
 			this.clientSecret = clientSecret;
 			this.site = site;
