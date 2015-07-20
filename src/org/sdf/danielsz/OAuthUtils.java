@@ -186,7 +186,7 @@ public class OAuthUtils {
 	}
 
 	public static Token getAccessToken(OAuth2Config oauthDetails) {
-		return getAccessToken(oauthDetails);
+		return getAccessToken(oauthDetails, false);
 	}
 
 	
