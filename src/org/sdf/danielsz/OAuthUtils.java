@@ -156,10 +156,12 @@ public class OAuthUtils {
 					response = client.execute(post);
 					code = response.getStatusLine().getStatusCode();
 					if (code >= 400) {
+						System.out.println("code [" + code + "]");
 						OAuthException e = new OAuthException(
 								"Could not retrieve access token for user: "
 										+ oauthDetails.getUsername()
 						);
+						e.setJsonResponse(handleJsonResponse(response));
 						e.setCode(code);
 						e.setUri(post.getURI());
 						throw e;

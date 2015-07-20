@@ -1,13 +1,14 @@
 package org.sdf.danielsz;
 
 import java.net.URI;
+import java.util.Map;
 
 public class OAuthException extends RuntimeException {
     private int code;
     private URI uri;
+    private Map<String, Object> jsonResponse;
 
     public OAuthException() {
-
     }
 
     public OAuthException(String message) {
@@ -28,5 +29,13 @@ public class OAuthException extends RuntimeException {
 
     public URI getUri() {
         return uri;
+    }
+
+    public Map<String, Object> getJsonResponse() {
+        return jsonResponse;
+    }
+
+    public void setJsonResponse(Map<String, Object> jsonResponse) {
+        this.jsonResponse = jsonResponse;
     }
 }
