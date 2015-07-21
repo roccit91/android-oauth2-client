@@ -53,9 +53,9 @@ public class OAuth2Client {
 		return site;
 	}
 
-	public Token getAccessTokenFromGoogle(String grantType) {
+	public Token getAccessTokenFromGoogle(String grantType, String username) {
 		OAuth2Config oauthConfig = new OAuth2Config.OAuth2ConfigBuilder(googleAccessToken, clientId, clientSecret, site)
-				.grantType(grantType).build();
+				.grantType(grantType).setUsername(username).build();
 		return OAuthUtils.getAccessToken(oauthConfig, true);
 	}
 

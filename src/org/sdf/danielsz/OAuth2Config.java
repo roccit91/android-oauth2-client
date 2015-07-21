@@ -88,5 +88,10 @@ public class OAuth2Config {
 		public OAuth2Config build () {
 			return new OAuth2Config(this); 
 		}
+
+		public OAuth2ConfigBuilder setUsername(String username) {
+			this.username = username;
+			return this;
+		}
 	}
 }

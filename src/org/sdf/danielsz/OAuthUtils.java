@@ -92,7 +92,10 @@ public class OAuthUtils {
 			parametersBody.add(new BasicNameValuePair(OAuthConstants.PASSWORD,
 					oauthDetails.getPassword()));
 		} else {
-			System.out.println("getAccessToken isGoogle! [" + oauthDetails.getGoogleAccessToken() + "]");
+			System.out.println("getAccessToken isGoogle! [" + oauthDetails.getGoogleAccessToken() +
+					"] username [" + oauthDetails.getUsername() + "]");
+			parametersBody.add(new BasicNameValuePair(OAuthConstants.USERNAME,
+					oauthDetails.getUsername()));
 			parametersBody.add(new BasicNameValuePair(OAuthConstants.ACCESS_TOKEN,
 					oauthDetails.getGoogleAccessToken()));
 		}
