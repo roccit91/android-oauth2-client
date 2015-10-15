@@ -307,26 +307,32 @@ public class OAuthUtils {
 			e1.printStackTrace();
 		}
 
-//		System.out.println();
-//		System.out.println("********** JSON Response Received **********");
+		System.out.println();
+		System.out.println("********** JSON Response Received **********");
 		
-		Map<String, Object> outMap = new HashMap<String, Object>();
-		Iterator<String> keysIterator = oauthLoginResponse.keys();
-		while (keysIterator.hasNext()) 
-		{
-		        String keyStr = keysIterator.next();
-		        Object value = null;
-				try {
-					value = oauthLoginResponse.get(keyStr);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				outMap.put(keyStr,value);
-//		        System.out.println(String.format("  %s = %s", keyStr, value));
+		Map<String, Object> outMap = new HashMap<>();
+		Iterator<String> keysIterator;
+		try {
+			keysIterator = oauthLoginResponse.keys();
+
+            while (keysIterator.hasNext())
+            {
+                    String keyStr = keysIterator.next();
+                    Object value = null;
+                    try {
+                        value = oauthLoginResponse.get(keyStr);
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    outMap.put(keyStr,value);
+                    System.out.println(String.format("  %s = %s", keyStr, value));
+            }
+        } catch (NullPointerException e) {
 		}
-			
+
 		return outMap;
+
 	}
 
 	public static Map handleURLEncodedResponse(HttpResponse response) {
