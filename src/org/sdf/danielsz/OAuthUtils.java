@@ -221,7 +221,7 @@ public class OAuthUtils {
 			post.setEntity(new UrlEncodedFormEntity(parametersBody, HTTP.UTF_8));
 
 			response = client.execute(post);
-			System.out.println(response.getStatusLine().getStatusCode());
+			// System.out.println(response.getStatusLine().getStatusCode());
 			int code = response.getStatusLine().getStatusCode();
 				if (code >= 400) {
 					System.out.println("Retry with client credentials");
@@ -272,7 +272,7 @@ public class OAuthUtils {
 		String contentType = OAuthConstants.JSON_CONTENT;
 		if (response.getEntity().getContentType() != null) {
 			contentType = response.getEntity().getContentType().getValue();
-			System.out.println(response.getEntity().getContentType().getValue());
+			// System.out.println(response.getEntity().getContentType().getValue());
 			
 		}
 		if (contentType.contains(OAuthConstants.JSON_CONTENT)) {
@@ -342,12 +342,12 @@ public class OAuthUtils {
 		Charset charset = null;
 		HttpEntity entity = response.getEntity();
 
-		System.out.println();
-		System.out.println("********** URL Encoded Response Received **********");
+		// System.out.println();
+		// System.out.println("********** URL Encoded Response Received **********");
 
 		for (Map.Entry<String, Charset> entry : set) {
-			System.out.println(String.format("  %s = %s", entry.getKey(),
-					entry.getValue()));
+			// System.out.println(String.format("  %s = %s", entry.getKey(),
+			// 		entry.getValue()));
 			if (entry.getKey().equalsIgnoreCase(HTTP.UTF_8)) {
 				charset = entry.getValue();
 			}
@@ -356,8 +356,8 @@ public class OAuthUtils {
 		try {
 			List<NameValuePair> list = URLEncodedUtils.parse(entity);
 			for (NameValuePair pair : list) {
-				System.out.println(String.format("  %s = %s", pair.getName(),
-						pair.getValue()));
+				// System.out.println(String.format("  %s = %s", pair.getName(),
+				// 		pair.getValue()));
 				oauthResponse.put(pair.getName(), pair.getValue());
 			}
 
@@ -382,7 +382,7 @@ public class OAuthUtils {
 			inStream.setCharacterStream(new StringReader(xmlString));
 			Document doc = db.parse(inStream);
 
-			System.out.println("********** XML Response Received **********");
+			// System.out.println("********** XML Response Received **********");
 			parseXMLDoc(null, doc, oauthResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -406,8 +406,8 @@ public class OAuthUtils {
 				org.w3c.dom.Element childElement = (org.w3c.dom.Element) child
 						.item(j);
 				if (childElement.hasChildNodes()) {
-					System.out.println(childElement.getTagName() + " : "
-							+ childElement.getTextContent());
+					// System.out.println(childElement.getTagName() + " : "
+					// 		+ childElement.getTextContent());
 					oauthResponse.put(childElement.getTagName(),
 							childElement.getTextContent());
 					parseXMLDoc(childElement, null, oauthResponse);
@@ -432,10 +432,10 @@ public class OAuthUtils {
 		String encodedValue = null;
 		byte[] encodedBytes = Base64.encode(cred.getBytes(), Base64.NO_WRAP);
 		encodedValue = new String(encodedBytes);
-		System.out.println("encodedBytes " + new String(encodedBytes));
+		// System.out.println("encodedBytes " + new String(encodedBytes));
 
 		byte[] decodedBytes = Base64.decode(encodedBytes, Base64.NO_WRAP);
-		System.out.println("decodedBytes " + new String(decodedBytes));
+		// System.out.println("decodedBytes " + new String(decodedBytes));
 
 		return encodedValue;
 
