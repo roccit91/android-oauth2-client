@@ -1,4 +1,4 @@
-package Roccitrhyno@gmail.com ;
+package org.sdf.danielsz;
 
 import java.net.URI;
 import java.util.Map;
